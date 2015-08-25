@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="build/icons/fallback/grunticon.loader.js"></script>
+    <script>
+        (function () {
+            var supportsSvg = function () {
+                var div = document.createElement('div');
+                div.innerHTML = '<svg/>';
+                return (div.firstChild && div.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
+            };
+            if (!supportsSvg()) {
+                grunticon(["", "/build/icons/fallback/icons.data.png.css", "/build/icons/fallback/icons.fallback.css"]);
+            } else {
+                var ajax = new XMLHttpRequest();
+                ajax.open("GET", "build/icons/icons.svg", true);
+                ajax.responseType = "document";
+                ajax.onload = function () {
+                    document.body.insertBefore(ajax.responseXML.documentElement,
+                            document.body.childNodes[0]);
+                };
+                ajax.send();
+            }
+        }());
+    </script>
+</head>
+<body>
+
+<div>
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-ad">
+        <use xlink:href="#icon-ad"></use>
+    </svg>
+</div>
+
+
+<div>
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-presentation">
+        <use xlink:href="#icon-presentation"></use>
+    </svg>
+</div>
+
+</body>
+</html>
