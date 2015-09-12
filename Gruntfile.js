@@ -50,7 +50,7 @@ module.exports = function (grunt) {
                 options: {
                     processors: [
                         require('pixrem')(),
-                        require('autoprefixer')({browsers: 'last 2 versions'})
+                        require('autoprefixer')({browsers: 'last 3 versions'})
                     ]
                 }
             },
@@ -91,7 +91,6 @@ module.exports = function (grunt) {
             }
         },
 
-
         typescript: {
             dist: {
                 src: ['js/**/*.ts'],
@@ -99,6 +98,21 @@ module.exports = function (grunt) {
                 options: {
                     module: 'amd'
                 }
+            }
+        },
+
+        uglify: {
+            dist: {
+                options: {
+                    sourceMap: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'dist/js',
+                    dest: 'dist/js',
+                    src: ['**/*.js'],
+                    ext: '.min.js'
+                }]
             }
         },
 
@@ -151,21 +165,21 @@ module.exports = function (grunt) {
         watch: {
             sass_dist: {
                 files: ['sass/*.scss'],
-                tasks: ['sass:dist'],
+                tasks: ['sass:dist', 'postcss'],
                 options: {
                     nospawn: true
                 }
             },
             sass_sections: {
                 files: ['sass/sections/**/*.scss'],
-                tasks: ['sass:sections'],
+                tasks: ['sass:sections', 'postcss'],
                 options: {
                     nospawn: true
                 }
             },
             ts: {
                 files: ['js/**/*.ts'],
-                tasks: ['typescript'],
+                tasks: ['js'],
                 options: {
                     nospawn: true
                 }
@@ -180,6 +194,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
     //SVG
     grunt.registerTask('svg', ['svgmin:svg']);
@@ -188,5 +203,9 @@ module.exports = function (grunt) {
     //Sass & Css
     grunt.registerTask('css', ['sass', 'postcss']);
 
-    grunt.registerTask('default', ['clean', 'css', 'svg', 'svg-sprite', 'typescript']);
+    //JS
+    grunt.registerTask('js', ['typescript', 'uglify']);
+
+
+    grunt.registerTask('default', ['clean', 'css', 'svg', 'svg-sprite', 'js']);
 };

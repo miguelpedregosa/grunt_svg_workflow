@@ -65,10 +65,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 @keyframes spinner-loader {
   0% {
+    -ms-transform: rotate(0deg);
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   100% {
+    -ms-transform: rotate(360deg);
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
