@@ -1,5 +1,7 @@
+@import "../vars";
+
 body {
-  padding-top: 50px;
+  padding-top: $padding-top;
 }
 .starter-template {
   padding: 40px 15px;
