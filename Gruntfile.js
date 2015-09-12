@@ -16,7 +16,7 @@ module.exports = function (grunt) {
         },
 
         sass: {
-            main: {
+            dist: {
                 options: {
                     style: 'expanded',
                     compass: true
@@ -45,8 +45,8 @@ module.exports = function (grunt) {
                 map: true
             },
 
-            main_dist: {
-                src: 'dist/css/*_ltr.css',
+            dist: {
+                src: 'dist/css/**/*_ltr.css',
                 options: {
                     processors: [
                         require('pixrem')(),
@@ -54,7 +54,7 @@ module.exports = function (grunt) {
                     ]
                 }
             },
-            main_rtl: {
+            rtl: {
                 options: {
                     processors: [
                         require('rtlcss')()
@@ -64,14 +64,14 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'dist/css',
-                    src: ['*_ltr.css'],
+                    src: ['**/*_ltr.css'],
                     dest: 'dist/css/',
                     rename: function (dest, matchedSrcPath) {
                         return path.join(dest, matchedSrcPath.replace('_ltr', '_rtl'));
                     }
                 }]
             },
-            main_nano: {
+            nano: {
                 options: {
                     processors: [
                         require('cssnano')()
@@ -82,47 +82,6 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'dist/css',
                     dest: 'dist/css',
-                    src: ['*.css'],
-                    ext: '.min.css'
-                }]
-            },
-            sections_dist: {
-                src: 'dist/css/sections/**/*_ltr.css',
-                options: {
-                    processors: [
-                        require('pixrem')(),
-                        require('autoprefixer')({browsers: 'last 3 versions'})
-                    ]
-                }
-            },
-            sections_rtl: {
-                options: {
-                    processors: [
-                        require('rtlcss')()
-                    ]
-                },
-
-                files: [{
-                    expand: true,
-                    cwd: 'dist/css/sections',
-                    src: ['**/*_ltr.css'],
-                    dest: 'dist/css/sections',
-                    rename: function (dest, matchedSrcPath) {
-                        return path.join(dest, matchedSrcPath.replace('_ltr', '_rtl'));
-                    }
-                }]
-            },
-            sections_nano: {
-                options: {
-                    processors: [
-                        require('cssnano')()
-                    ]
-                },
-
-                files: [{
-                    expand: true,
-                    cwd: 'dist/css/sections',
-                    dest: 'dist/css/sections',
                     src: ['**/*.css'],
                     ext: '.min.css'
                 }]
@@ -201,23 +160,9 @@ module.exports = function (grunt) {
             }
         },
         watch: {
-            sass_main: {
-                files: ['sass/*.scss'],
-                tasks: ['css-main'],
-                options: {
-                    nospawn: true
-                }
-            },
-            sass_sections: {
-                files: ['sass/sections/**/*.scss'],
-                tasks: ['css-sections'],
-                options: {
-                    nospawn: true
-                }
-            },
-            sass_bootstrap: {
-                files: ['sass/bootstrap/**/*.scss'],
-                tasks: ['css-sections'],
+            sass_dist: {
+                files: ['sass/**/*.scss'],
+                tasks: ['css'],
                 options: {
                     nospawn: true
                 }
@@ -246,12 +191,7 @@ module.exports = function (grunt) {
     grunt.registerTask('svg-sprite', ['svgmin:sprite', 'svgstore', 'grunticon', 'clean:svg_sprite']);
 
     //Sass & Css
-    grunt.registerTask('postcss-main', ['postcss:main_dist', 'postcss:main_rtl', 'postcss:main_nano']);
-    grunt.registerTask('postcss-sections', ['postcss:sections_dist', 'postcss:sections_rtl', 'postcss:sections_nano']);
-
-    grunt.registerTask('css-main', ['sass:main', 'postcss-main']);
-    grunt.registerTask('css-sections', ['sass:sections', 'postcss-sections']);
-    grunt.registerTask('css', ['css-main', 'css-sections']);
+    grunt.registerTask('css', ['sass', 'postcss']);
 
     //JS
     grunt.registerTask('js', ['typescript', 'uglify']);
