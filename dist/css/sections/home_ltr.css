@@ -1,9 +1,10 @@
-h1 {
-  color: blue;
-  float: left;
+body {
+  padding-top: 50px;
 }
-h1:active {
-  color: red;
+
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
 }
 
 /*# sourceMappingURL=home_ltr.css.map */

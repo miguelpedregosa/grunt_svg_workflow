@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
     <link rel="stylesheet" href="dist/css/test_grunt_ltr.min.css">
     <link rel="stylesheet" href="dist/css/sections/home_ltr.min.css">
@@ -20,8 +22,13 @@
                 ajax.open("GET", "dist/svg/sprite/test_grunt.svg", true);
                 ajax.responseType = "document";
                 ajax.onload = function () {
-                    document.body.insertBefore(ajax.responseXML.documentElement,
-                            document.body.childNodes[0]);
+                    var svg = ajax.responseXML.documentElement;
+                    svg.width = '0';
+                    svg.height = '0';
+                    svg.style.width = '0';
+                    svg.style.height = '0';
+                    svg.style.position = 'absolute';
+                    document.body.insertBefore(svg, document.body.childNodes[0]);
                 };
                 ajax.send();
             }
@@ -29,24 +36,56 @@
     </script>
 </head>
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+    <div class="starter-template">
+        <h1>Bootstrap starter template</h1>
+
+        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a
+            mostly barebones HTML document.</p>
+
+        <div class="spinner-loader">
+            Loading…
+        </div>
+
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-ad">
+                <use xlink:href="#icon-ad"></use>
+            </svg>
+        </div>
 
 
-<div class="spinner-loader">
-    Loading…
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-presentation">
+                <use xlink:href="#icon-presentation"></use>
+            </svg>
+        </div>
+    </div>
+
 </div>
-
-<div>
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-ad">
-        <use xlink:href="#icon-ad"></use>
-    </svg>
-</div>
-
-
-<div>
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-presentation">
-        <use xlink:href="#icon-presentation"></use>
-    </svg>
-</div>
+<!-- /.container -->
 
 </body>
 </html>

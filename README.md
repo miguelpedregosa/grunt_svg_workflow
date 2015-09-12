@@ -1,4 +1,4 @@
-Flujo de trabajo con ficheros SVG usando grunt. Repositorio de ejemplo.
+Flujo de trabajo de ejemplo con Sass, TypeScript
 
 Referencias:
 
