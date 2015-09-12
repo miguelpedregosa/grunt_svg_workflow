@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <script src="build/icons/fallback/grunticon.loader.js"></script>
+    <link rel="stylesheet" href="dist/css/test_grunt.css">
+    <link rel="stylesheet" href="dist/css/sections/home.css">
+    <script src="dist/svg/sprite/fallback/grunticon.loader.js"></script>
     <script>
         (function () {
             var supportsSvg = function () {
@@ -12,10 +14,10 @@
                 return (div.firstChild && div.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
             };
             if (!supportsSvg()) {
-                grunticon(["", "/build/icons/fallback/icons.data.png.css", "/build/icons/fallback/icons.fallback.css"]);
+                grunticon(["", "/dist/svg/sprite/fallback/icons.data.png.css", "/dist/svg/sprite/fallback/icons.fallback.css"]);
             } else {
                 var ajax = new XMLHttpRequest();
-                ajax.open("GET", "build/icons/icons.svg", true);
+                ajax.open("GET", "dist/svg/sprite/test_grunt.svg", true);
                 ajax.responseType = "document";
                 ajax.onload = function () {
                     document.body.insertBefore(ajax.responseXML.documentElement,
@@ -27,6 +29,11 @@
     </script>
 </head>
 <body>
+
+
+<div class="whirly-loader">
+    Loading…
+</div>
 
 <div>
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-ad">
