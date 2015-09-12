@@ -16,7 +16,7 @@ module.exports = function (grunt) {
         },
 
         sass: {
-            dist: {
+            main: {
                 options: {
                     style: 'expanded',
                     compass: true
@@ -45,7 +45,7 @@ module.exports = function (grunt) {
                 map: true
             },
 
-            dist: {
+            main: {
                 src: 'dist/css/**/*_ltr.css',
                 options: {
                     processors: [
@@ -70,14 +70,16 @@ module.exports = function (grunt) {
                         return path.join(dest, matchedSrcPath.replace('_ltr', '_rtl'));
                     }
                 }]
+            }
+        },
+        cssmin: {
+            options: {
+                compatibility: 'ie8',
+                keepSpecialComments: '*',
+                advanced: false,
+                sourceMap: true
             },
-            nano: {
-                options: {
-                    processors: [
-                        require('cssnano')()
-                    ]
-                },
-
+            main: {
                 files: [{
                     expand: true,
                     cwd: 'dist/css',
@@ -138,7 +140,7 @@ module.exports = function (grunt) {
 
         svgstore: {
             options: {
-                includedemo: true,
+                includedemo: false,
                 prefix: 'icon-'
             },
             sprite: {
@@ -185,13 +187,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     //SVG
     grunt.registerTask('svg', ['svgmin:svg']);
     grunt.registerTask('svg-sprite', ['svgmin:sprite', 'svgstore', 'grunticon', 'clean:svg_sprite']);
 
     //Sass & Css
-    grunt.registerTask('css', ['sass', 'postcss']);
+    grunt.registerTask('css', ['sass', 'postcss', 'cssmin']);
 
     //JS
     grunt.registerTask('js', ['typescript', 'uglify']);
