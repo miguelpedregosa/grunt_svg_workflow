@@ -5,6 +5,7 @@
 module.exports = function (grunt) {
     require('jit-grunt')(grunt);
     require('load-grunt-tasks')(grunt);
+    var path = require('path');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -45,11 +46,48 @@ module.exports = function (grunt) {
             },
 
             dist: {
-                src: 'dist/css/**/*.css',
-                processors: [
-                    require('pixrem')(),
-                    require('autoprefixer')({browsers: 'last 2 versions'})
-                ]
+                src: 'dist/css/**/*_ltr.css',
+                options: {
+                    processors: [
+                        require('pixrem')(),
+                        require('autoprefixer')({browsers: 'last 2 versions'})
+                    ]
+                }
+            },
+            rtl: {
+                options: {
+                    map: true,
+                    processors: [
+                        require('rtlcss')()
+                    ]
+                },
+
+                files: [{
+                    expand: true,
+                    cwd: 'dist/css',
+                    src: ['**/*_ltr.css'],
+                    dest: 'dist/css/',
+                    rename: function (dest, matchedSrcPath) {
+                        console.log(matchedSrcPath);
+                        return path.join(dest, matchedSrcPath.replace('_ltr', '_rtl'));
+                    }
+                }]
+            },
+            nano: {
+                options: {
+                    map: false,
+                    processors: [
+                        require('cssnano')()
+                    ]
+                },
+
+                files: [{
+                    expand: true,
+                    cwd: 'dist/css',
+                    dest: 'dist/css',
+                    src: ['**/*.css'],
+                    ext: '.min.css'
+                }]
             }
         },
 
@@ -64,7 +102,7 @@ module.exports = function (grunt) {
             }
         },
 
-        svgmin: { //minimize SVG files
+        svgmin: {
             options: {
                 plugins: [
                     {removeViewBox: false},
@@ -90,7 +128,7 @@ module.exports = function (grunt) {
         svgstore: {
             options: {
                 includedemo: true,
-                prefix: 'icon-' // This will prefix each <g> ID
+                prefix: 'icon-'
             },
             sprite: {
                 files: {
@@ -141,13 +179,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-svgstore');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-typescript');
+    grunt.loadNpmTasks('grunt-postcss');
 
     //SVG
     grunt.registerTask('svg', ['svgmin:svg']);
     grunt.registerTask('svg-sprite', ['svgmin:sprite', 'svgstore', 'grunticon', 'clean:svg_sprite']);
 
     //Sass & Css
-    grunt.registerTask('css', ['sass']);
+    grunt.registerTask('css', ['sass', 'postcss']);
 
-    grunt.registerTask('default', ['clean', 'sass', 'svg', 'svg-sprite', 'typescript']);
+    grunt.registerTask('default', ['clean', 'css', 'svg', 'svg-sprite', 'typescript']);
 };
