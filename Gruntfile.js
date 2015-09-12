@@ -21,7 +21,7 @@ module.exports = function (grunt) {
                     compass: true
                 },
                 files: {
-                    'dist/css/<%= pkg.name %>.css': 'sass/<%= pkg.name %>.scss'
+                    'dist/css/<%= pkg.name %>_ltr.css': 'sass/<%= pkg.name %>.scss'
                 }
             },
             sections: {
@@ -34,10 +34,25 @@ module.exports = function (grunt) {
                     cwd: 'sass/sections',
                     src: ['**/*.scss'],
                     dest: 'dist/css/sections',
-                    ext: '.css'
+                    ext: '_ltr.css'
                 }]
             }
         },
+
+        postcss: {
+            options: {
+                map: true
+            },
+
+            dist: {
+                src: 'dist/css/**/*.css',
+                processors: [
+                    require('pixrem')(),
+                    require('autoprefixer')({browsers: 'last 2 versions'})
+                ]
+            }
+        },
+
 
         typescript: {
             dist: {
