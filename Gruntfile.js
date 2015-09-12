@@ -84,7 +84,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'dist/css',
                     dest: 'dist/css',
-                    src: ['**/*.css'],
+                    src: ['**/*!(.min).css'],
                     ext: '.min.css'
                 }]
             }
@@ -201,4 +201,5 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask('default', ['clean', 'css', 'svg', 'svg-sprite', 'js']);
+    grunt.registerTask('dist', ['default']);
 };
