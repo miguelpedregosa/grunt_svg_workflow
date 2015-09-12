@@ -1,4 +1,4 @@
-Flujo de trabajo de ejemplo con Sass, TypeScript
+Flujo de trabajo de ejemplo con Sass, TypeScript y creación automática de versión RTL
 
 Referencias:
 
