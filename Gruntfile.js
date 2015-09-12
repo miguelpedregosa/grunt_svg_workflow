@@ -56,7 +56,6 @@ module.exports = function (grunt) {
             },
             rtl: {
                 options: {
-                    map: true,
                     processors: [
                         require('rtlcss')()
                     ]
@@ -75,7 +74,6 @@ module.exports = function (grunt) {
             },
             nano: {
                 options: {
-                    map: false,
                     processors: [
                         require('cssnano')()
                     ]
