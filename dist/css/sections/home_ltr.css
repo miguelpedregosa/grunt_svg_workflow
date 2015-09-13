@@ -8,4 +8,11 @@ body {
   font-weight: 300;
 }
 
+.starter-template h1 {
+  color: #337ab7;
+}
+.starter-template h1:hover {
+  color: #5cb85c;
+}
+
 /*# sourceMappingURL=home_ltr.css.map */
