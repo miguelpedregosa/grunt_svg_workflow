@@ -16,25 +16,16 @@ module.exports = function (grunt) {
         },
 
         sass: {
-            main: {
-                options: {
-                    style: 'expanded',
-                    compass: true
-                },
-                files: {
-                    'dist/css/<%= pkg.name %>_ltr.css': 'sass/<%= pkg.name %>.scss'
-                }
-            },
-            sections: {
+            dist: {
                 options: {
                     style: 'expanded',
                     compass: true
                 },
                 files: [{
                     expand: true,
-                    cwd: 'sass/sections',
+                    cwd: 'sass',
                     src: ['**/*.scss'],
-                    dest: 'dist/css/sections',
+                    dest: 'dist/css',
                     ext: '_ltr.css'
                 }]
             }
@@ -84,7 +75,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'dist/css',
                     dest: 'dist/css',
-                    src: ['**/*!(.min).css'],
+                    src: ['**/*_{ltr,rtl}.css'],
                     ext: '.min.css'
                 }]
             }
