@@ -36,7 +36,7 @@ module.exports = function (grunt) {
                 map: true
             },
 
-            main: {
+            dist: {
                 src: 'dist/css/**/*_ltr.css',
                 options: {
                     processors: [
@@ -75,7 +75,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'dist/css',
                     dest: 'dist/css',
-                    src: ['**/*_{ltr,rtl}.css'],
+                    src: ['**/*.css', "!**/*.min.css"],
                     ext: '.min.css'
                 }]
             }
@@ -84,7 +84,7 @@ module.exports = function (grunt) {
         typescript: {
             dist: {
                 src: ['js/**/*.ts'],
-                dest: 'dist/js/<%= pkg.name %>.js',
+                dest: 'dist/js/app.js',
                 options: {
                     module: 'amd'
                 }
@@ -100,7 +100,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'dist/js',
                     dest: 'dist/js',
-                    src: ['**/*.js'],
+                    src: ['**/*.js', '!**/*.min.js'],
                     ext: '.min.js'
                 }]
             }
