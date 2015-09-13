@@ -1,3 +1,7 @@
+declare function require(name:string);
+const $ = require('jquery');
+const _ = require('underscore');
+
 class App {
     private name = 'Test App';
 
@@ -6,7 +10,7 @@ class App {
      * @returns {string}
      */
     public getName():string {
-        return this.name;
+        return this.name + ' ' + $.fn.jquery;
     }
 }
 

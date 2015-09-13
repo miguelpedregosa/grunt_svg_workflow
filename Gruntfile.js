@@ -90,6 +90,9 @@ module.exports = function (grunt) {
                 }
             }
         },
+        browserify: {
+            'dist/js/app.js': ['dist/js/app.js']
+        },
 
         uglify: {
             dist: {
@@ -179,6 +182,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-browserify');
 
     //SVG
     grunt.registerTask('svg', ['svgmin:svg']);
@@ -188,7 +192,7 @@ module.exports = function (grunt) {
     grunt.registerTask('css', ['sass', 'postcss', 'cssmin']);
 
     //JS
-    grunt.registerTask('js', ['typescript', 'uglify']);
+    grunt.registerTask('js', ['typescript', 'browserify', 'uglify']);
 
 
     grunt.registerTask('default', ['clean', 'css', 'svg', 'svg-sprite', 'js']);
